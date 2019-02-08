@@ -37,16 +37,22 @@ pipeline{
                                            }             
                              }
 }
-			  stage ('Deploy')
-					{
-						steps{
-									  sh 'sudo cp target/*.war /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
-									  sh 'sudo ls -ltr /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
-									  }
-						steps{
-									  sh 'cd /root/Terraform'
-									  sh 'terraform plan -var-file='../modulone.tfvars'
-									  }
-					}             
+              stage ('Deploy')
+{
+steps{
+              sh 'sudo cp target/*.war /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
+              sh 'sudo ls -ltr /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
+              }
+}             
               }             
+}
+
+def notify(status){
+    emailext(
+        to: "arun.gaurav@mindtree.com",
+        subject: "${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+        body: """<p>${status}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' :</p>
+        <p>Check console output at <a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a></p>""",
+        
+        )
 }
