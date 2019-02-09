@@ -41,7 +41,7 @@ stage ('Terraform')
 {
 		steps{
               sh 'sudo cd /root/Terraform/'
-              sh '/usr/local/bin/terraform plan -var-file='../modulone.tfvars''
+              sh '/usr/local/bin/terraform plan -var-file=../modulone.tfvars'
               }
 }
 stage ('Deploy war')
