@@ -44,6 +44,13 @@ steps{
               sh 'sudo ls -ltr /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
               }
 }
+stage ('Terraform')
+{
+steps{
+              sh 'sudo cp target/*.war /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
+              sh 'sudo ls -ltr /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
+              }
+}
 
               }             
 }
