@@ -5,7 +5,6 @@ node('master') {
 	try{
 		stage('git checkout') {
 			git 'https://github.com/argaurava/DevOps-Demo-Project.git'
-			sh 'mkdir properties'
 		}    
     
 
