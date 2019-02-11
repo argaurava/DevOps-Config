@@ -1,6 +1,7 @@
 node('master') {
     
 	notify('Project Build Started')
+	emailext body: 'Build Status', subject: 'Jenkin Build Status', to: 'arun.gaurav1989@gmail.com'
 
 	try{
 		stage('git checkout') {
