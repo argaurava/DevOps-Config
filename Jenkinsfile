@@ -9,9 +9,6 @@ node('master') {
 		}    
     
 
-		def project_path="atmosphere/spring-boot-samples/spring-boot-sample-atmosphere"
-
-		dir(project_path) {
 
 			stage('Build & Compile') {    
 				sh 'mvn clean package'
@@ -37,7 +34,7 @@ node('master') {
               sh 'sudo ls -ltr /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
 			}
 			notify('Project Build Completed ')
-		}
+		
 
 	}
 	catch(err) {
