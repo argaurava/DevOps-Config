@@ -8,16 +8,15 @@ node('master') {
 			sh 'mkdir properties'
 		}    
     
-
-
-			stage('Build & Compile') {    
-				sh 'mvn clean package'
-			}
-			stage('SonarQube Analysis' ) {
+			stage('Code Analysis' ) {
 				sh 'mvn sonar:sonar'
 			}
-
-			stage('Artifactory Deploy'){
+			
+			stage('Build Automation') {    
+				sh 'mvn clean package'
+			}
+			
+			stage('Build Management'){
 				def server = Artifactory.newServer url:'http://localhost:8081/artifactory', username: 'admin', password: 'password'
                             def uploadSpec = """{
                                "files": [
@@ -29,12 +28,14 @@ node('master') {
                             }"""
 			}
 
-			stage('Tomcat Deployment'){
+			stage('Deployment'){
               sh 'sudo cp target/*.war /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
               sh 'sudo ls -ltr /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
 			}
-			notify('Project Build Completed ')
-		
+			
+			stage('Email Notification'){
+				notify('Project Build Completed ')
+			}
 
 	}
 	catch(err) {
