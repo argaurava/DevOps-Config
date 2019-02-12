@@ -1,23 +1,22 @@
 node('master') {
     
 	notify('Project Build Started')
-	emailext body: 'Build Status', subject: 'Jenkin Build Status', to: 'arun.gaurav1989@gmail.com'
 
 	try{
 		stage('git checkout') {
 			git 'https://github.com/argaurava/DevOps-Demo-Project.git'
+			sh 'mkdir properties'
 		}    
     
-
-
-			stage('Build & Compile') {    
-				sh 'mvn clean package'
-			}
-			stage('SonarQube Analysis' ) {
+			stage('Code Analysis' ) {
 				sh 'mvn sonar:sonar'
 			}
-
-			stage('Artifactory Deploy'){
+			
+			stage('Build Automation') {    
+				sh 'mvn clean package'
+			}
+			
+			stage('Build Management'){
 				def server = Artifactory.newServer url:'http://localhost:8081/artifactory', username: 'admin', password: 'password'
                             def uploadSpec = """{
                                "files": [
@@ -29,12 +28,14 @@ node('master') {
                             }"""
 			}
 
-			stage('Tomcat Deployment'){
-              sh 'sudo cp target/*.war /root/Tomcat/apache-tomcat-8.5.37/webapps'
-              sh 'sudo ls -ltr /root/Tomcat/apache-tomcat-8.5.37/webapps'
+			stage('Deployment'){
+              sh 'sudo cp target/*.war /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
+              sh 'sudo ls -ltr /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
 			}
-			notify('Project Build Completed ')
-		
+			
+			stage('Email Notification'){
+				notify('Project Build Completed ')
+			}
 
 	}
 	catch(err) {
