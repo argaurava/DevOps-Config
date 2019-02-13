@@ -19,18 +19,18 @@ node('master') {
 		def mvn_version=props_file['MVN_PATH']
 		
 		sh 'echo "checkout properies"'
-		sh 'echo ${app_url} ${mvn_version}'
+		sh 'echo "${app_url}" "${mvn_version}"'
 		
 		stage('git checkout') {
-			git url: ${app_url}
+			git url: "${app_url}"
 		}
     
 			stage('Code Analysis' ) {
-				sh '${mvn_version}/mvn sonar:sonar'
+				sh '"${mvn_version}"/mvn sonar:sonar'
 			}
 			
 			stage('Build Automation') {    
-				sh '${mvn_version}/mvn clean package'
+				sh '"${mvn_version}"/mvn clean package'
 			}
 			
 			stage('Build Management'){
