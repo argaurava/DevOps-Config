@@ -22,7 +22,7 @@ node('master') {
 				def mvn_version=props.MVN_PATH
 				
 				sh 'echo "checkout properies"'
-				sh 'echo "${app_url}" "${mvn_version}"'
+				sh 'echo ${app_url} ${mvn_version}'
 				
 			}
 		
