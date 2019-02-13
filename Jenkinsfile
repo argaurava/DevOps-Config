@@ -12,14 +12,17 @@ node('master') {
 				git 'https://github.com/argaurava/DevOps-UTL.git'
 			}
 		}
-
-		def props = readProperties file: 'props_dir/PropertiesFile.properties'
 		
-		def app_url=props["APP_GIT_URL"]
-		def mvn_version=props["MVN_PATH"]
-		
-		sh 'echo "checkout properies"'
-		sh 'echo "${app_url}" "${mvn_version}"'
+		stage ('Reading properies file') {
+			def props = readProperties file: 'props_dir/PropertiesFile.properties'
+			
+			def app_url=props["APP_GIT_URL"]
+			def mvn_version=props["MVN_PATH"]
+			
+			sh 'echo "checkout properies"'
+			sh 'echo "${app_url}" "${mvn_version}"'
+			
+		}
 		
 		stage('git checkout') {
 			git url: "${app_url}"
