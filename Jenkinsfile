@@ -1,15 +1,11 @@
 node('master') {
-
-def app_url
-def mvn_version
     
 	notify('Project Build Started')
-	
 
 	try{
 	
 		def props_path="props_dir"
-		sh 'ls -ltr'
+		
 		dir(props_path) {
 		
 			stage ('Reading properies file') {
@@ -18,51 +14,43 @@ def mvn_version
 				
 				def props = readProperties file: 'PropertiesFile.properties'
 				
-				sh 'cat PropertiesFile.properties'
-				
-				AppUrl=props.APP_GIT_URL
-				MvnPath=props.MVN_PATH
-				
-
-				
+				def AppUrl=props.APP_GIT_URL
 			}
-		
 		}
 		
 		stage('git checkout') {
-		 	echo "checkout properies"
-			echo "${AppUrl} ${MvnPath}"
+		 	echo "${AppUrl}
 			git url: "${AppUrl}"
 		}
     
-			stage('Code Analysis' ) {
-				sh '"${MvnPath}"/mvn sonar:sonar'
-			}
-			
-			stage('Build Automation') {    
-				sh '"${MvnPath}"/mvn clean package'
-			}
-			
-			stage('Build Management'){
-				def server = Artifactory.newServer url:'http://localhost:8081/artifactory', username: 'admin', password: 'password'
-                            def uploadSpec = """{
-                               "files": [
-                                           {
-                                             "pattern": "*.war",
-                                             "target": "lib-staging"
-                                           }
-										]
-                            }"""
-			}
+		stage('Code Analysis' ) {
+			sh 'mvn sonar:sonar'
+		}
+		
+		stage('Build Automation') {    
+			sh 'mvn clean package'
+		}
+		
+		stage('Build Management'){
+			def server = Artifactory.newServer url:'http://localhost:8081/artifactory', username: 'admin', password: 'password'
+						def uploadSpec = """{
+						   "files": [
+									   {
+										 "pattern": "*.war",
+										 "target": "lib-staging"
+									   }
+									]
+						}"""
+		}
 
-			stage('Deployment'){
-              sh 'sudo cp target/*.war /root/Tomcat/apache-tomcat-8.5.37/webapps'
-              sh 'sudo ls -ltr /root/Tomcat/apache-tomcat-8.5.37/webapps'
-			}
-			
-			stage('Email Notification'){
-				notify('Project Build Completed ')
-			}
+		stage('Deployment'){
+		  sh 'sudo cp target/*.war /root/Tomcat/apache-tomcat-8.5.37/webapps'
+		  sh 'sudo ls -ltr /root/Tomcat/apache-tomcat-8.5.37/webapps'
+		}
+		
+		stage('Email Notification'){
+			notify('Project Build Completed ')
+		}
 
 	}
 	catch(err) {
