@@ -8,15 +8,15 @@ node('master') {
 
 	try{
 	
-	def props_path="props_dir/"
+	def props_path="props_dir"
 	
-	dir(props_dir) {
+	dir(props_path) {
 		stage('git properties checkout') {
 			git url: ${app_url}
 		}
 	}
 	
-	props_file = readProperties file:'props_dir/PropertiesFile.properties'
+	props_file = readProperties file:'props_path/PropertiesFile.properties'
 	
 	app_url=props_file['APP_GIT_URL']
 	mvn_version=props_file['MVN_PATH']
