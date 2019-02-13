@@ -16,7 +16,7 @@ node('master') {
 			}
 		}
 		sh 'echo "checkout properies"'
-		sh 'echo ${app_url} ${mvn_version}"'
+		sh 'echo ${app_url} ${mvn_version}'
 		sh 'ls -ltr'
 		props_file = readProperties file:'props_path/PropertiesFile.properties'
 	
