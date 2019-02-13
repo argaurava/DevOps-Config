@@ -1,6 +1,3 @@
-def app_url
-def mvn_version
-
 node('master') {
     
 	notify('Project Build Started')
@@ -18,14 +15,14 @@ node('master') {
 
 		def props_file = readProperties file:'props_dir/PropertiesFile.properties'
 	
-		app_url=props_file['APP_GIT_URL']
-		mvn_version=props_file['MVN_PATH']
+		def app_url=props_file['APP_GIT_URL']
+		def mvn_version=props_file['MVN_PATH']
 		
 		sh 'echo "checkout properies"'
 		sh 'echo ${app_url} ${mvn_version}'
 		
 		stage('git checkout') {
-			git url: "${app_url}"
+			git url: ${app_url}
 		}
     
 			stage('Code Analysis' ) {
