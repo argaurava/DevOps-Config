@@ -11,7 +11,7 @@ node('master') {
 		
 		dir(props_path) {
 		
-			stage ('Reading properies file') {
+			stage ('Prop Checkout ') {
 			
 				git 'https://github.com/argaurava/DevOps-UTL.git'
 				
@@ -22,7 +22,7 @@ node('master') {
 			}
 		}
 		
-		stage('git checkout') {
+		stage('App Checkout ') {
 		 	echo "${AppUrl}"
 			git "${AppUrl}"
 		}
@@ -59,10 +59,9 @@ node('master') {
 		  sh 'sudo ls -ltr /root/Tomcat/apache-tomcat-8.5.37/webapps'
 		}
 		
-		stage('Email Notification'){
-			notify('Project Build Completed ')
-		}
-
+	
+		notify('Project Build Completed ')
+	
 	}
 	catch(err) {
 		notify("Error ${err}")
