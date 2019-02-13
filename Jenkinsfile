@@ -3,6 +3,7 @@ node('master') {
 	notify('Project Build Started')
 	
 	def AppUrl
+	def TerrPath
 
 	try{
 	
@@ -17,6 +18,7 @@ node('master') {
 				def props = readProperties file: 'PropertiesFile.properties'
 				
 				AppUrl=props.APP_GIT_URL
+				TerrPath=props.TERR_PATH
 			}
 		}
 		
@@ -43,6 +45,13 @@ node('master') {
 									   }
 									]
 						}"""
+		}
+		
+		
+		dir(TerrPath) {
+			stage('Terraform'){
+				/usr/local/bin/terraform apply -auto-approve -var-file='../modulone.tfvars'
+			}
 		}
 
 		stage('Deployment'){
