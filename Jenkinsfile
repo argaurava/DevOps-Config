@@ -16,6 +16,8 @@ node('master') {
 		stage ('Reading properies file') {
 			def props = readProperties file: 'props_dir/PropertiesFile.properties'
 			
+			sh 'ls -ltr props_dir/PropertiesFile.properties'
+			
 			def app_url=props["APP_GIT_URL"]
 			def mvn_version=props["MVN_PATH"]
 			
