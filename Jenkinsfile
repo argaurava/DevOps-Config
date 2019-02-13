@@ -12,7 +12,7 @@ node('master') {
 		sh 'ls -ltr'
 		dir(props_path) {
 			stage('git properties checkout') {
-				git url: '${app_url}'
+				git 'https://github.com/argaurava/DevOps-UTL.git'
 			}
 		}
 		sh 'echo "checkout properies"'
