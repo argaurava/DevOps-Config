@@ -20,11 +20,11 @@ def mvn_version
 				
 				sh 'cat PropertiesFile.properties'
 				
-				app_url=props.APP_GIT_URL
-				mvn_version=props.MVN_PATH
+				AppUrl=props.APP_GIT_URL
+				MvnPath=props.MVN_PATH
 				
-				sh 'echo "checkout properies"'
-				sh 'echo ${app_url} ${mvn_version}'
+				echo "checkout properies"
+				echo "${AppUrl} ${MvnPath}"
 				
 			}
 		
