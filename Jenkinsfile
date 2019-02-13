@@ -13,19 +13,13 @@ node('master') {
 			}
 		}
 
-		def props_file = readProperties file:'props_dir/PropertiesFile.properties'
+		def props = readProperties file: 'props_dir/PropertiesFile.properties'
 		
-		def envList = []
-		for (it2 in mapToList(props_file)) {
-        def key = it2[0]
-        def val = it2[1]
-        envList << key + "=" + val
-		}
-		withEnv(envList) {
-			sh 'echo "${BRANCHNAME}"'
-		}
-	
+		def app_url=props["APP_GIT_URL"]
+		def mvn_version=props["MVN_PATH"]
 		
+		sh 'echo "checkout properies"'
+		sh 'echo "${app_url}" "${mvn_version}"'
 		
 		stage('git checkout') {
 			git url: "${app_url}"
