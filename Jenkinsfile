@@ -19,7 +19,7 @@ node('master') {
 		}
 		
 		stage('git checkout') {
-		 	echo "${AppUrl}
+		 	echo "${AppUrl}"
 			git url: "${AppUrl}"
 		}
     
