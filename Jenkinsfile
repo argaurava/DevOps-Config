@@ -12,7 +12,7 @@ node('master') {
 		sh 'ls -ltr'
 		dir(props_path) {
 			stage('git properties checkout') {
-				git url: "${app_url}"
+				git url: '${app_url}'
 			}
 		}
 		sh 'echo "checkout properies"'
