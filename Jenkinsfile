@@ -5,7 +5,6 @@ node('master') {
 	try{
 		stage('git checkout') {
 			git 'https://github.com/argaurava/DevOps-Demo-Project.git'
-			sh 'mkdir properties'
 		}    
     
 			stage('Code Analysis' ) {
@@ -29,8 +28,8 @@ node('master') {
 			}
 
 			stage('Deployment'){
-              sh 'sudo cp target/*.war /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
-              sh 'sudo ls -ltr /home/devopsuser3/Tomcat/apache-tomcat-8.5.37/webapps'
+              sh 'sudo cp target/*.war /root/Tomcat/apache-tomcat-8.5.37/webapps'
+              sh 'sudo ls -ltr /root/Tomcat/apache-tomcat-8.5.37/webapps'
 			}
 			
 			stage('Email Notification'){
