@@ -23,23 +23,24 @@ def mvn_version
 				AppUrl=props.APP_GIT_URL
 				MvnPath=props.MVN_PATH
 				
-				echo "checkout properies"
-				echo "${AppUrl} ${MvnPath}"
+
 				
 			}
 		
 		}
 		
 		stage('git checkout') {
-			git url: "${app_url}"
+		 	echo "checkout properies"
+			echo "${AppUrl} ${MvnPath}"
+			git url: "${AppUrl}"
 		}
     
 			stage('Code Analysis' ) {
-				sh '"${mvn_version}"/mvn sonar:sonar'
+				sh '"${MvnPath}"/mvn sonar:sonar'
 			}
 			
 			stage('Build Automation') {    
-				sh '"${mvn_version}"/mvn clean package'
+				sh '"${MvnPath}"/mvn clean package'
 			}
 			
 			stage('Build Management'){
