@@ -1,18 +1,38 @@
+def app_url
+def mvn_version
+
 node('master') {
     
 	notify('Project Build Started')
+	
+	def props_path="props_dir/"
+	props_file = readProperties file:'props_dir/PropertiesFile.properties'
+	
+	app_url=props_file['APP_GIT_URL']
+	mvn_version=props_file['MVN_PATH']
+	
+	
+	dir(props_dir) {
+	
+		stage('git properties checkout') {
+			git url: ${app_url}
+		}
+	
+	}
+	
+	
 
 	try{
 		stage('git checkout') {
-			git 'https://github.com/argaurava/DevOps-Demo-Project.git'
-		}    
+			git url: ${app_url}
+		}
     
 			stage('Code Analysis' ) {
-				sh 'mvn sonar:sonar'
+				sh '${mvn_version}/mvn sonar:sonar'
 			}
 			
 			stage('Build Automation') {    
-				sh 'mvn clean package'
+				sh '${mvn_version}/mvn clean package'
 			}
 			
 			stage('Build Management'){
