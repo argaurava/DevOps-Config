@@ -14,12 +14,12 @@ node('master') {
 		
 		
 			stage ('Reading properies file') {
-				def props = readProperties interpolate: true, file: 'PropertiesFile.properties'
+				def props = readProperties file: 'PropertiesFile.properties'
 				
 				sh 'ls -ltr PropertiesFile.properties'
 				
-				def app_url=props["APP_GIT_URL"]
-				def mvn_version=props["MVN_PATH"]
+				def app_url=props.APP_GIT_URL
+				def mvn_version=props.MVN_PATH
 				
 				sh 'echo "checkout properies"'
 				sh 'echo "${app_url}" "${mvn_version}"'
