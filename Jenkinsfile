@@ -1,4 +1,7 @@
 node('master') {
+
+def app_url
+def mvn_version
     
 	notify('Project Build Started')
 	
@@ -8,18 +11,17 @@ node('master') {
 		def props_path="props_dir"
 		sh 'ls -ltr'
 		dir(props_path) {
-			stage('git properties checkout') {
-				git 'https://github.com/argaurava/DevOps-UTL.git'
-			}
-		
 		
 			stage ('Reading properies file') {
+			
+				git 'https://github.com/argaurava/DevOps-UTL.git'
+				
 				def props = readProperties file: 'PropertiesFile.properties'
 				
-				sh 'ls -ltr PropertiesFile.properties'
+				sh 'cat PropertiesFile.properties'
 				
-				def app_url=props.APP_GIT_URL
-				def mvn_version=props.MVN_PATH
+				app_url=props.APP_GIT_URL
+				mvn_version=props.MVN_PATH
 				
 				sh 'echo "checkout properies"'
 				sh 'echo ${app_url} ${mvn_version}'
