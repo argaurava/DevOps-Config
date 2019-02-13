@@ -16,7 +16,7 @@ node('master') {
 			}
 		}
 
-		props_file = readProperties file:'props_path/PropertiesFile.properties'
+		props_file = readProperties file:'props_dir/PropertiesFile.properties'
 	
 		app_url=props_file['APP_GIT_URL']
 		mvn_version=props_file['MVN_PATH']
