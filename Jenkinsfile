@@ -1,6 +1,8 @@
 node('master') {
     
 	notify('Project Build Started')
+	
+	def AppUrl
 
 	try{
 	
@@ -14,7 +16,7 @@ node('master') {
 				
 				def props = readProperties file: 'PropertiesFile.properties'
 				
-				def AppUrl=props.APP_GIT_URL
+				AppUrl=props.APP_GIT_URL
 			}
 		}
 		
