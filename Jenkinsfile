@@ -15,15 +15,15 @@ node('master') {
 				git 'https://github.com/argaurava/DevOps-UTL.git'
 			}
 		}
-		sh 'echo "checkout properies"'
-		sh 'echo ${app_url} ${mvn_version}'
-		sh 'ls -ltr'
+
 		props_file = readProperties file:'props_path/PropertiesFile.properties'
 	
 		app_url=props_file['APP_GIT_URL']
 		mvn_version=props_file['MVN_PATH']
-	
-	
+		
+		sh 'echo "checkout properies"'
+		sh 'echo ${app_url} ${mvn_version}'
+		
 		stage('git checkout') {
 			git url: "${app_url}"
 		}
