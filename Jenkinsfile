@@ -60,7 +60,6 @@ node('master') {
 		dir(AnsConf) {
 			stage('Ansible Configuration'){
 				sh "/root/Ansible/create_inv.sh"
-				sh "ansible all -i invertory.ini -m ping"
 				sh "/usr/bin/ansible-playbook -i invertory.ini site.yml"
 			}
 		}
