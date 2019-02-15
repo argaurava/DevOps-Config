@@ -47,6 +47,7 @@ node('master') {
 									   }
 									]
 						}"""
+						server.upload(uploadSpec) 
 		}
 
 		stage('Deployment'){
