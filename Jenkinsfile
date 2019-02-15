@@ -49,6 +49,21 @@ node('master') {
 						}"""
 						server.upload(uploadSpec) 
 		}
+		
+		dir(TerrPath) {
+			stage('Terraform'){
+				sh "/usr/local/bin/terraform apply -auto-approve -var-file=../modulone.tfvars"
+				sh "terraform output aws_instance_public_dns > /root/Ansible/aws_dns_name.txt"
+			}
+		}
+		
+		dir(AnsConf) {
+			stage('Ansible Configuration'){
+				sh "create_inv.sh"
+				sh "ansible all -i invertory.ini -m ping"
+				sh "/usr/bin/ansible-playbook -i invertory.ini site.yml"
+			}
+		}
 
 		stage('Deployment'){
 		  sh 'sudo cp target/*.war /root/Tomcat/apache-tomcat-8.5.37/webapps'
