@@ -42,7 +42,7 @@ node('master') {
 						def uploadSpec = """{
 						   "files": [
 									   {
-										 "pattern": "*.war",
+										 "pattern": "target/*.war",
 										 "target": "lib-release"
 									   }
 									]
