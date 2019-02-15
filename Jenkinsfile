@@ -4,6 +4,7 @@ node('master') {
 	
 	def AppUrl
 	def TerrPath
+	def AnsConf
 
 	try{
 	
@@ -19,6 +20,7 @@ node('master') {
 				
 				AppUrl=props.APP_GIT_URL
 				TerrPath=props.TERR_PATH
+				AnsConf=props.ANS_CONF
 			}
 		}
 		
@@ -53,8 +55,16 @@ node('master') {
 				sh "/usr/local/bin/terraform apply -auto-approve -var-file=../modulone.tfvars"
 			}
 		}
+		
+		dir(AnsConf) {
+			stage('Ansible Configuration'){
+				sh "ansible all -i invertory.ini -m ping"
+				sh "/usr/bin/ansible-playbook -i invertory.ini site.yml"
+			}
+		}
 
 		stage('Deployment'){
+		  sh 'sudo mv /root/Tomcat/apache-tomcat-8.5.37/webapps/DevOpsProj* /root/Tomcat/apache-tomcat-8.5.37/webapps/backup/'
 		  sh 'sudo cp target/*.war /root/Tomcat/apache-tomcat-8.5.37/webapps'
 		  sh 'sudo ls -ltr /root/Tomcat/apache-tomcat-8.5.37/webapps'
 		}
