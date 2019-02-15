@@ -50,7 +50,6 @@ node('master') {
 		}
 
 		stage('Deployment'){
-		  sh 'sudo mv -f /root/Tomcat/apache-tomcat-8.5.37/webapps/DevOpsProj* /root/Tomcat/apache-tomcat-8.5.37/webapps/backup/'
 		  sh 'sudo cp target/*.war /root/Tomcat/apache-tomcat-8.5.37/webapps'
 		  sh 'sudo ls -ltr /root/Tomcat/apache-tomcat-8.5.37/webapps'
 		}
