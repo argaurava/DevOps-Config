@@ -48,20 +48,6 @@ node('master') {
 									]
 						}"""
 		}
-		
-		
-		dir(TerrPath) {
-			stage('Terraform'){
-				sh "/usr/local/bin/terraform apply -auto-approve -var-file=../modulone.tfvars"
-			}
-		}
-		
-		dir(AnsConf) {
-			stage('Ansible Configuration'){
-				sh "ansible all -i invertory.ini -m ping"
-				sh "/usr/bin/ansible-playbook -i invertory.ini site.yml"
-			}
-		}
 
 		stage('Deployment'){
 		  sh 'sudo mv /root/Tomcat/apache-tomcat-8.5.37/webapps/DevOpsProj* /root/Tomcat/apache-tomcat-8.5.37/webapps/backup/'
