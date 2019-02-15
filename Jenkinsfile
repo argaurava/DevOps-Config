@@ -43,7 +43,7 @@ node('master') {
 						   "files": [
 									   {
 										 "pattern": "*.war",
-										 "target": "lib-staging"
+										 "target": "lib-release"
 									   }
 									]
 						}"""
