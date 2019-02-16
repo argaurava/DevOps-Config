@@ -57,6 +57,12 @@ node('master') {
 			}
 		}
 		
+		stage('Deployment'){
+		  sh 'sudo cp target/*.war /root/Tomcat/apache-tomcat-8.5.37/webapps'
+		  sh 'sudo ls -ltr /root/Tomcat/apache-tomcat-8.5.37/webapps'
+		}
+		
+		
 		dir(AnsConf) {
 			stage('Ansible Configuration'){
 				sh "/root/Ansible/create_inv.sh"
@@ -64,11 +70,7 @@ node('master') {
 			}
 		}
 
-		stage('Deployment'){
-		  sh 'sudo cp target/*.war /root/Tomcat/apache-tomcat-8.5.37/webapps'
-		  sh 'sudo ls -ltr /root/Tomcat/apache-tomcat-8.5.37/webapps'
-		}
-		
+
 	
 		notify('Project Build Completed ')
 	
